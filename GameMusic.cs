@@ -3,8 +3,6 @@ using System.Collections;
 
 public class GameMusic : MonoBehaviour 
 { 
-    #region VARS AND REFS
-
     // Reference to the GameMusic instance (singleton)
     public static GameMusic instance;
 
@@ -29,10 +27,6 @@ public class GameMusic : MonoBehaviour
     // Optional transition audio clip and audio source
     public AudioClip optionalTransition;
     private AudioSource optionalTransitionAudioSource;
-
-    #endregion
-
-    #region INIT
 
     private void Awake()
     {
@@ -65,10 +59,6 @@ public class GameMusic : MonoBehaviour
         // Set the volume of Music1 to the MaxVolume value
         Music1.volume = MaxVolume;
     }
-
-    #endregion
-
-    #region METHODS
 
     // Called when danger is detected in the game
     public void Danger()
@@ -141,10 +131,6 @@ public class GameMusic : MonoBehaviour
         Music1.volume = MaxVolume;
     } 
 } 
-
-#endregion
-	
-#region COROUTINES
 
 // Coroutine for fading the music to the danger state
 private IEnumerator FadeToDanger()
@@ -239,5 +225,3 @@ private IEnumerator FadeToChill()
         yield return null;
     }
 }
-
-#endregion
