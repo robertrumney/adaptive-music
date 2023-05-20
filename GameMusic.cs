@@ -7,26 +7,25 @@ public class GameMusic : MonoBehaviour
     public static GameMusic instance;
 
     // Audio sources for playing music
-    public AudioSource Music1;
-    public AudioSource Music2;
+    public AudioSource music1;
+    public AudioSource music2;
 
     // AudioClip for the death music
-    public AudioClip DeathMusic;
+    public AudioClip deathMusic;
 
     // Speed at which music fades
     public float musicFadeSpeed = 5;
 
     // Boolean variables for tracking game state
-    [System.NonSerialized]
     public bool danger = false;
-    private bool dead = false;
+    public bool dead = false;
 
     // Maximum volume for the music
-    public float MaxVolume = 1;
+    public float maxVolume = 1;
 
     // Optional transition audio clip and audio source
     public AudioClip optionalTransition;
-    private AudioSource optionalTransitionAudioSource;
+    public AudioSource optionalTransitionAudioSource;
 
     private void Awake()
     {
@@ -37,7 +36,7 @@ public class GameMusic : MonoBehaviour
         AudioListener.volume = 1;
 
         // Retrieve the MaxVolume value from PlayerPrefs
-        MaxVolume = PlayerPrefs.GetFloat("MusicVolume");
+        maxVolume = PlayerPrefs.GetFloat("MusicVolume");
 
         // Create an AudioSource component for the optional transition audio
         optionalTransitionAudioSource = gameObject.AddComponent<AudioSource>();
@@ -48,16 +47,16 @@ public class GameMusic : MonoBehaviour
 
     private void Start()
     {
-        // Set the outputAudioMixerGroup for Music1 and Music2
-        Music1.outputAudioMixerGroup = Game.instance.audioSource.outputAudioMixerGroup;
-        Music2.outputAudioMixerGroup = Game.instance.audioSource.outputAudioMixerGroup;
+        // Set the outputAudioMixerGroup for music1 and music2
+        music1.outputAudioMixerGroup = Game.instance.audioSource.outputAudioMixerGroup;
+        music2.outputAudioMixerGroup = Game.instance.audioSource.outputAudioMixerGroup;
 
-        // If Music1 is enabled, play the music
-        if (Music1.enabled)
-            Music1.Play();
+        // If music1 is enabled, play the music
+        if (music1.enabled)
+            music1.Play();
 
         // Set the volume of Music1 to the MaxVolume value
-        Music1.volume = MaxVolume;
+        music1.volume = MaxVolume;
     }
 
     // Called when danger is detected in the game
@@ -73,19 +72,12 @@ public class GameMusic : MonoBehaviour
             if (optionalTransition)
                 optionalTransitionAudioSource.Play();
 
-            // Trigger scare in a shopkeeper if it exists
-            if (ShopKeeping.instance)
-                ShopKeeping.instance.Scare();
-
             // Fade the music to danger state
             StartCoroutine(FadeToDanger());
 
-            // Set ingozi to true (game state)
-            ingozi = true;
+            // Set danger to true (game state)
+            danger = true;
         }
-
-        // Interrupt the intro switch in the game progress
-        GameProgress.instance.introSwitchInterrupted = true;
     }
 
     // Called when the player dies
@@ -94,23 +86,23 @@ public class GameMusic : MonoBehaviour
         if (!dead)
         {
             // Stop the current music
-            if (Music1.clip)
+            if (music1.clip)
             {
-                Music1.Stop();
-                Music2.Stop();
+                music1.Stop();
+                music2.Stop();
             }
 
-            // Set the volume and clip for Music1 to play the death music
-            Music1.volume = 0.33f;
-            Music1.clip = DeathMusic;
+            // Set the volume and clip for music1 to play the death music
+            music1.volume = 0.33f;
+            music1.clip = deathMusic;
 
             // Enable Music1 if it's disabled
-            if (Music1.enabled == false)
-                Music1.enabled = true;
+            if (music1.enabled == false)
+                music1.enabled = true;
 
             // Set the loop property to false and play the death music
-            Music1.loop = false;
-            Music1.Play();
+            music1.loop = false;
+            music1.Play();
 
             // Set dead to true
             dead = true;
@@ -120,43 +112,43 @@ public class GameMusic : MonoBehaviour
     // Set the maximum volume for the music
     private void SetMaxVolume(float x)
     {
-	MaxVolume = x;
-	    // Adjust the volume of Music1 or Music2 based on the game state
-    if (ingozi) 
-    {
-        Music2.volume = MaxVolume; 
+	    maxVolume = x;
+	    
+	    // Adjust the volume of music1 or music2 based on the game state
+	    if (danger) 
+	    {
+		music2.volume = maxVolume; 
+	    }
+	    else 
+	    {
+		music1.volume = maxVolume;
+	    } 
     }
-    else 
-    {
-        Music1.volume = MaxVolume;
-    } 
-} 
 
-// Coroutine for fading the music to the danger state
-private IEnumerator FadeToDanger()
-{ 
-    while (true)
+    // Coroutine for fading the music to the danger state
+    private IEnumerator FadeToDanger()
     { 
-        // Reduce the volume of Music1 over time
-        Music1.volume -= Time.deltaTime;
+	    while (true)
+	    { 
+		// Reduce the volume of Music1 over time
+		music1.volume -= Time.deltaTime;
 
-        // Increase the volume of Music2 up to the MaxVolume value
-        if (Music2.volume < MaxVolume)
-        {
-            Music2.volume += Time.deltaTime;
-        }
+		// Increase the volume of music2 up to the maxVolume value
+		if (music2.volume < maxVolume)
+		{
+		    music2.volume += Time.deltaTime;
+		}
 
-        // Check if Music1 volume has reached 0
-        if (Music1.volume == 0)
-        {
-            // Start the countdown
-            StartCoroutine(CountDown());
-            yield break;		
-        }
-
-        yield return null;
+		// Check if music1 volume has reached 0
+		if (music1.volume == 0)
+		{
+		    // Start the countdown
+		    StartCoroutine(CountDown());
+		    yield break;		
+		}
+		yield return null;
+	    }
     }
-}
 
 // Countdown method for transitioning from danger state to chill state
 private float countDown;
@@ -200,28 +192,21 @@ private IEnumerator FadeToChill()
     while (true)
     { 
         // Increase the volume of Music1 up to the MaxVolume value
-        if (Music1.volume < MaxVolume)
+        if (music1.volume < maxVolume)
         {
-            Music1.volume += Time.deltaTime;
+            music1.volume += Time.deltaTime;
         }
 
-        // Reduce the volume of Music2 over time
-        Music2.volume -= Time.deltaTime;
+        // Reduce the volume of music2 over time
+        music2.volume -= Time.deltaTime;
 
         // Check if Music2 volume has reached 0
-        if (Music2.volume == 0)
+        if (music2.volume == 0)
         {
-            // Set ingozi to false (game state)
-
-            ingozi = false;
-
-            // Recover the shopkeeper if it exists
-            if (ShopKeeping.instance)
-                ShopKeeping.instance.Recover();
-
+            // Set danger to false (game state)
+            danger = false;
             yield break;	
         }
-
         yield return null;
     }
 }
