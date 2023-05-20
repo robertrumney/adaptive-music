@@ -26,6 +26,9 @@ public class GameMusic : MonoBehaviour
     // Optional transition audio clip and audio source
     public AudioClip optionalTransition;
     public AudioSource optionalTransitionAudioSource;
+	
+	// Countdown for transitioning from danger state to chill state
+	private float countDown;
 
     private void Awake()
     {
@@ -96,7 +99,7 @@ public class GameMusic : MonoBehaviour
             music1.volume = 0.33f;
             music1.clip = deathMusic;
 
-            // Enable Music1 if it's disabled
+            // Enable Music1 if its disabled
             if (music1.enabled == false)
                 music1.enabled = true;
 
@@ -150,63 +153,61 @@ public class GameMusic : MonoBehaviour
 	    }
     }
 
-// Countdown method for transitioning from danger state to chill state
-private float countDown;
+	public void ForceChill()
+	{
+		Invoke("ForceChill", 1);
+	}
 
-public void ForceChill()
-{
-    Invoke("ForceChill", 1);
-}
+	private void _ForceChill()
+	{
+		countDown = 0;
+	}
 
-private void _ForceChill()
-{
-    countDown = 0;
-}
+	private IEnumerator CountDown()
+	{
+		while (true) 
+		{
+			// Decrease the countdown
+			countDown--;
 
-private IEnumerator CountDown()
-{
-    while (true) 
-    {
-        // Decrease the countdown
-        countDown--;
+			// Check if the countdown has reached 0
+			if (countDown == 0) 
+			{
+				// Check if the player is not dead
+				if (!dead) 
+				{
+					// Fade the music to the chill state
+					StartCoroutine(FadeToChill());
+					yield break;	
+				}
+			}
 
-        // Check if the countdown has reached 0
-        if (countDown == 0) 
-        {
-            // Check if the player is not dead
-            if (!dead) 
-            {
-                // Fade the music to the chill state
-                StartCoroutine(FadeToChill());
-                yield break;	
-            }
-        }
+			yield return new WaitForSeconds(1);
+		}
+	}
 
-        yield return new WaitForSeconds(1);
-    }
-}
+	// Coroutine for fading the music to the chill state
+	private IEnumerator FadeToChill()
+	{
+		while (true)
+		{ 
+			// Increase the volume of Music1 up to the MaxVolume value
+			if (music1.volume < maxVolume)
+			{
+				music1.volume += Time.deltaTime;
+			}
 
-// Coroutine for fading the music to the chill state
-private IEnumerator FadeToChill()
-{
-    while (true)
-    { 
-        // Increase the volume of Music1 up to the MaxVolume value
-        if (music1.volume < maxVolume)
-        {
-            music1.volume += Time.deltaTime;
-        }
+			// Reduce the volume of music2 over time
+			music2.volume -= Time.deltaTime;
 
-        // Reduce the volume of music2 over time
-        music2.volume -= Time.deltaTime;
-
-        // Check if Music2 volume has reached 0
-        if (music2.volume == 0)
-        {
-            // Set danger to false (game state)
-            danger = false;
-            yield break;	
-        }
-        yield return null;
-    }
+			// Check if Music2 volume has reached 0
+			if (music2.volume == 0)
+			{
+				// Set danger to false (game state)
+				danger = false;
+				yield break;	
+			}
+			yield return null;
+		}
+	}
 }
