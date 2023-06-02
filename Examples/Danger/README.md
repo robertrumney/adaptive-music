@@ -2,11 +2,6 @@
 
 This tutorial explains how to integrate the `Player` script and the `GameMusic` script in Unity to handle player damage and manage game music transitions.
 
-## Prerequisites
-
-- Unity game development environment
-- Basic understanding of Unity and C#
-
 ## Step 1: Setup
 
 1. Attach the `GameMusic` script to a game object in your scene.
