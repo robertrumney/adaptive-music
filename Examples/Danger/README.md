@@ -85,13 +85,3 @@ public class Player : MonoBehaviour
     }
 }
 ```
-
-5. In the Player script, adjust the health variable to match your player's health system.
-
-## Conclusion
-
-You have now integrated the `Player` script and the `GameMusic` script in Unity to handle player damage and manage game music transitions. The `PlayerDamage` method triggers the danger state in the game music, and the `Die` method triggers the death state. Feel free to customize the scripts and add additional functionality based on your game's requirements.
-
-Remember to attach the `GameMusic` script to a game object in your scene and ensure that the `Player` script is attached to the player character.
-
-For more information, refer to the code comments in the scripts and Unity's documentation on scripting and audio management.
