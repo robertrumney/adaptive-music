@@ -31,6 +31,10 @@ Example usage:
 GameMusic.instance.Danger();
 ```
 
+## Examples
+
+Three distinct examples are available in the "Examples" folder of this repository for your reference. Should you encounter any difficulties, don't hesitate to consult these examples for guidance!
+
 Note: The `GameMusic` script must be attached to a GameObject in the scene. Ensure you have a reference to the `GameMusic` script in your other scripts or use `GameMusic.instance` to access its public methods.
 
 ## Additional Functionality
