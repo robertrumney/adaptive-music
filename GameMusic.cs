@@ -157,12 +157,12 @@ public class GameMusic : MonoBehaviour
         }
     }
 
-    public void ForceChill()
+    public void DelayForceChill(int delay)
     {
-        Invoke(nameof(DelayForceChill), 1);
+        Invoke(nameof(DelayForceChill), delay);
     }
 
-    private void DelayForceChill()
+    private void ForceChill()
     {
         countDown = 0;
     }
