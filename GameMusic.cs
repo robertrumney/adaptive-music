@@ -159,10 +159,10 @@ public class GameMusic : MonoBehaviour
 
     public void ForceChill()
     {
-        Invoke("ForceChill", 1);
+        Invoke("DelayForceChill", 1);
     }
 
-    private void _ForceChill()
+    private void DelayForceChill()
     {
         countDown = 0;
     }
