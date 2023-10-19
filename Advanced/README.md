@@ -2,14 +2,6 @@
 
 A flexible and user-friendly Unity music management system that allows for seamless transitions between different music states using fade effects. This system is designed to be extensible, allowing you to easily add or modify music states as your game grows or changes.
 
-## Table of Contents
-
-- [Features](#features)
-- [Setup](#setup)
-- [Customization](#customization)
-- [Contributing](#contributing)
-- [License](#license)
-
 ## Features
 
 - **Multiple Music States**: Supports a variety of predefined music states, including Chill, Danger, Battle, Victory, and Death.
