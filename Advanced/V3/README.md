@@ -22,11 +22,11 @@ The `UltimateDynamicGameMusic` is a comprehensive Unity MonoBehaviour script des
 
 In the Unity inspector, under the "Music Configuration" header:
 
-"Add music entries by clicking on the '+' button in the `musicEntries` list. For each entry, select a `MusicState`, assign an `AudioClip`, and set its `weight`."
+Add music entries by clicking on the '+' button in the `musicEntries` list. For each entry, select a `MusicState`, assign an `AudioClip`, and set its `weight`.
 
 ### Transitioning Between Music States
 
-"To change the music state during gameplay, use the following static method:"
+To change the music state during gameplay, use the following static method:
 
 ```csharp
 UltimateDynamicGameMusic.PlayState(MusicState state);
