@@ -1,9 +1,16 @@
 using UnityEngine;
 using System.Collections;
-using System.Collections.Generic;
+using System.Linq;
 
 public class AdvancedGameMusic : MonoBehaviour
 {
+    [System.Serializable]
+    public struct MusicEntry
+    {
+        public MusicState state;
+        public AudioClip clip;
+    }
+
     public enum MusicState
     {
         None,
@@ -19,9 +26,11 @@ public class AdvancedGameMusic : MonoBehaviour
 
     public float musicFadeSpeed = 5;
     public float maxVolume = 1;
+    public MusicEntry[] musicEntries;
 
+    private AudioSource activeAudioSource;
+    private AudioSource inactiveAudioSource;
     private MusicState currentState = MusicState.None;
-    private Dictionary<MusicState, AudioSource> stateToMusic = new Dictionary<MusicState, AudioSource>();
 
     private void Awake()
     {
@@ -29,48 +38,41 @@ public class AdvancedGameMusic : MonoBehaviour
         AudioListener.volume = 1;
         maxVolume = PlayerPrefs.GetFloat("MusicVolume", 1);
 
-        // Initialize the state-to-music mapping (assuming AudioSources are attached to this GameObject)
-        stateToMusic[MusicState.Chill] = transform.Find("ChillMusic").GetComponent<AudioSource>();
-        stateToMusic[MusicState.Danger] = transform.Find("DangerMusic").GetComponent<AudioSource>();
-        stateToMusic[MusicState.Battle] = transform.Find("BattleMusic").GetComponent<AudioSource>();
-        // ... Add other states and their respective music sources
+        // Initialize audio sources
+        AudioSource[] sources = GetComponents<AudioSource>();
+        activeAudioSource = sources[0];
+        inactiveAudioSource = sources[1];
     }
 
     public void ChangeMusicState(MusicState newState)
     {
         if (currentState != newState)
         {
-            if (currentState != MusicState.None)
+            AudioClip newClip = musicEntries.FirstOrDefault(entry => entry.state == newState).clip;
+            if (newClip)
             {
-                StartCoroutine(FadeOut(stateToMusic[currentState]));
+                inactiveAudioSource.clip = newClip;
+                StartCoroutine(FadeTransition());
             }
-
-            if (newState != MusicState.None)
-            {
-                StartCoroutine(FadeIn(stateToMusic[newState]));
-            }
-
             currentState = newState;
         }
     }
 
-    private IEnumerator FadeOut(AudioSource audioSource)
+    private IEnumerator FadeTransition()
     {
-        while (audioSource.volume > 0)
+        inactiveAudioSource.Play();
+        while (activeAudioSource.volume > 0)
         {
-            audioSource.volume -= Time.deltaTime * musicFadeSpeed;
+            activeAudioSource.volume -= Time.deltaTime * musicFadeSpeed;
+            inactiveAudioSource.volume += Time.deltaTime * musicFadeSpeed;
             yield return null;
         }
-        audioSource.Stop();
-    }
+        activeAudioSource.Stop();
 
-    private IEnumerator FadeIn(AudioSource audioSource)
-    {
-        audioSource.Play();
-        while (audioSource.volume < maxVolume)
-        {
-            audioSource.volume += Time.deltaTime * musicFadeSpeed;
-            yield return null;
-        }
+        // Swap active and inactive sources
+        var temp = activeAudioSource;
+        activeAudioSource = inactiveAudioSource;
+        inactiveAudioSource = temp;
+        inactiveAudioSource.volume = 0; // Reset volume for the next transition
     }
 }
