@@ -7,7 +7,6 @@ The `UltimateDynamicGameMusic` is a comprehensive Unity MonoBehaviour script des
 - **Dynamic Music Transitions:** Smoothly transition between various music states with customizable fade durations.
 - **Weighted Music Entries:** Assign priority weights to different music states to influence playback selection.
 - **Volume Configuration:** Easily adjust the music fade speed and maximum volume for playback.
-- **Singleton Design:** Ensures only one instance of the music manager exists at any given time.
 
 ## Installation
 
@@ -47,7 +46,3 @@ PlayerPrefs.SetFloat("MusicVolume", desiredVolume);
 ```
 
 Where `desiredVolume` is a float value between 0 (mute) and 1 (maximum volume).
-
-## License
-
-"This project is licensed under the MIT License. See the `LICENSE.md` file for details."
