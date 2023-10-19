@@ -49,11 +49,13 @@ public class AdvancedGameMusic : MonoBehaviour
         if (currentState != newState)
         {
             AudioClip newClip = musicEntries.FirstOrDefault(entry => entry.state == newState).clip;
+            
             if (newClip)
             {
                 inactiveAudioSource.clip = newClip;
                 StartCoroutine(FadeTransition());
             }
+            
             currentState = newState;
         }
     }
@@ -61,16 +63,19 @@ public class AdvancedGameMusic : MonoBehaviour
     private IEnumerator FadeTransition()
     {
         inactiveAudioSource.Play();
+        
         while (activeAudioSource.volume > 0)
         {
             activeAudioSource.volume -= Time.deltaTime * musicFadeSpeed;
             inactiveAudioSource.volume += Time.deltaTime * musicFadeSpeed;
             yield return null;
         }
+        
         activeAudioSource.Stop();
 
         // Swap active and inactive sources
         var temp = activeAudioSource;
+        
         activeAudioSource = inactiveAudioSource;
         inactiveAudioSource = temp;
         inactiveAudioSource.volume = 0; // Reset volume for the next transition
