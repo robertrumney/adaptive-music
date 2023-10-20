@@ -92,7 +92,7 @@ public class GameMusic : MonoBehaviour
             instance.countDown = 0;
         }
     }
-    
+
     // Called when danger is detected in the game
     public void DangerState()
     {
@@ -144,18 +144,21 @@ public class GameMusic : MonoBehaviour
     }
 
     // Set the maximum volume for the music
-    private void SetMaxVolume(float x)
+    public static void SetMaxVolume(float x)
     {
         maxVolume = x;
 
-        // Adjust the volume of music1 or music2 based on the game state
-        if (danger)
+        if (instance)
         {
-            music2.volume = maxVolume;
-        }
-        else
-        {
-            music1.volume = maxVolume;
+            // Adjust the volume of music1 or music2 based on the game state
+            if (danger)
+            {
+                instance.music2.volume = maxVolume;
+            }
+            else
+            {
+                instance.music1.volume = maxVolume;
+            }
         }
     }
 
@@ -180,6 +183,7 @@ public class GameMusic : MonoBehaviour
                 StartCoroutine(CountDown());
                 yield break;
             }
+            
             yield return null;
         }
     }
@@ -228,6 +232,7 @@ public class GameMusic : MonoBehaviour
                 danger = false;
                 yield break;
             }
+            
             yield return null;
         }
     }
