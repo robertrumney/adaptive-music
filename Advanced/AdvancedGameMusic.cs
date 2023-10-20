@@ -44,6 +44,14 @@ public class AdvancedGameMusic : MonoBehaviour
         inactiveAudioSource = sources[1];
     }
 
+    public static void ChangeState(MusicState state)
+    {
+        if (instance)
+        {
+            instance.ChangeMusicState(state);
+        }
+    }
+    
     public void ChangeMusicState(MusicState newState)
     {
         if (currentState != newState)
