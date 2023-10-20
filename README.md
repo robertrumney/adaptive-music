@@ -18,7 +18,7 @@ The GameMusic script is a Unity component that provides music management functio
    - `Music2`: An additional audio source used for transitioning between music states.
    - `DeathMusic`: The audio clip to play when the player dies.
    - `optionalTransition`: An optional audio clip for smooth transitions between music states.
-4. Customize the `musicFadeSpeed` and `MaxVolume` properties according to your game's requirements.
+4. Customize the `musicFadeSpeed`, `dangerMusicLength` and `MaxVolume` properties according to your game's requirements.
 
 ## Usage
 
