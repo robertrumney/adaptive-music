@@ -38,9 +38,6 @@ public class GameMusic : MonoBehaviour
         // Set the instance reference to this script
         instance = this;
 
-        // Set the AudioListener volume to maximum
-        AudioListener.volume = 1;
-
         // Retrieve the MaxVolume value from PlayerPrefs
         maxVolume = PlayerPrefs.GetFloat("MusicVolume");
 
@@ -57,10 +54,6 @@ public class GameMusic : MonoBehaviour
 
     private void Start()
     {
-        // Set the outputAudioMixerGroup for music1 and music2
-        music1.outputAudioMixerGroup = Game.instance.audioSource.outputAudioMixerGroup;
-        music2.outputAudioMixerGroup = Game.instance.audioSource.outputAudioMixerGroup;
-
         // If music1 is enabled, play the music
         if (music1.enabled)
             music1.Play();
