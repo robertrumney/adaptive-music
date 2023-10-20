@@ -16,6 +16,9 @@ public class GameMusic : MonoBehaviour
     // Speed at which music fades
     public float musicFadeSpeed = 5;
 
+    // Time at which music will return to normal if no danger is present
+    public float dangerMusicLength = 10;
+
     // Boolean variables for tracking game state
     public bool danger = false;
     public bool dead = false;
@@ -94,7 +97,7 @@ public class GameMusic : MonoBehaviour
     public void DangerState()
     {
         // Start a countdown
-        countDown = 12;
+        countDown = dangerMusicLength;
 
         // Check if danger is not already active and the player is not dead
         if (!danger && !dead)
