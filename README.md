@@ -22,14 +22,22 @@ The GameMusic script is a Unity component that provides music management functio
 
 ## Usage
 
-To trigger the danger state and transition to appropriate music, call `GameMusic.instance.Danger()` from any script in your game when the player is damaged or when you want to indicate a rough situation.
+To trigger the danger state and transition to appropriate music, call `GameMusic.Danger()` from any script in your game when the player is damaged or when you want to indicate a rough situation.
 
 Example usage:
 
 ```csharp
 // Call the Danger() method from any script to indicate a dangerous or rough situation
-GameMusic.instance.Danger();
+GameMusic.Danger();
+
+// Call the Death() method from any script to indicate player death
+GameMusic.Death();
+
+// Call the ForceChill() method from any script to indicate a victory or calm state
+GameMusic.ForceChill();
 ```
+
+When not using the `ForceChill()` method the music will fade back to a chill state if no danger is present after the specified amount of time in the `dangerMusicLength` variable.
 
 ## Examples
 
