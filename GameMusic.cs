@@ -66,8 +66,32 @@ public class GameMusic : MonoBehaviour
         music1.volume = MaxVolume;
     }
 
+    public static void Danger()
+    {
+        if(instance)
+        {
+            instance.DangerState();
+        }
+    }
+
+    public static void Death()
+    {
+        if(instance)
+        {
+            instance.DeathState();
+        }
+    }
+
+    public static void ForceChill()
+    {
+        if(instance)
+        {
+            instance.countDown = 0;
+        }
+    }
+    
     // Called when danger is detected in the game
-    public void Danger()
+    public void DangerState()
     {
         // Start a countdown
         countDown = 12;
@@ -88,7 +112,7 @@ public class GameMusic : MonoBehaviour
     }
 
     // Called when the player dies
-    public void Death()
+    public void DeathState()
     {
         if (!dead)
         {
@@ -155,16 +179,6 @@ public class GameMusic : MonoBehaviour
             }
             yield return null;
         }
-    }
-
-    public void DelayForceChill(int delay)
-    {
-        Invoke(nameof(DelayForceChill), delay);
-    }
-
-    private void ForceChill()
-    {
-        countDown = 0;
     }
 
     private IEnumerator CountDown()
