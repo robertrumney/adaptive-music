@@ -68,7 +68,7 @@ public class GameMusic : MonoBehaviour
 
     public static void Danger()
     {
-        if(instance)
+        if (instance)
         {
             instance.DangerState();
         }
@@ -76,7 +76,7 @@ public class GameMusic : MonoBehaviour
 
     public static void Death()
     {
-        if(instance)
+        if (instance)
         {
             instance.DeathState();
         }
@@ -84,7 +84,7 @@ public class GameMusic : MonoBehaviour
 
     public static void ForceChill()
     {
-        if(instance)
+        if (instance)
         {
             instance.countDown = 0;
         }
