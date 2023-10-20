@@ -14,7 +14,7 @@ A flexible and user-friendly Unity music management system that allows for seaml
 To transition between music states in your game:
 
 ```csharp
-AdvancedGameMusic.instance.ChangeMusicState(AdvancedGameMusic.MusicState.Danger);
+AdvancedGameMusic.ChangeState(AdvancedGameMusic.MusicState.Danger);
 ```
 
 ## Setup
