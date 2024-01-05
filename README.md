@@ -8,6 +8,7 @@ The GameMusic script is a Unity component that provides music management functio
 - Transition between different music states, such as danger and calm.
 - Support for death music and optional transition audio.
 - Adjustable music fade speed and maximum volume.
+- Advanced versions available for more complicated setups.
 
 ## Setup
 
