@@ -54,6 +54,10 @@ The `GameMusic` script provides additional functionality that you can utilize:
 - The `SetMaxVolume(float x)` method enables you to adjust the maximum volume of the music dynamically.
 - The `ForceChill()` method helps you force the music to transition to a calm state.
 
+## Advanced Versions
+
+Have a look inside the other folders for more advanced versions of the script with additional features such as multiple music states.
+
 ## Contributions
 
 Contributions to the `GameMusic` script are welcome! If you find any issues or have suggestions for improvements, please feel free to open an issue or submit a pull request.
