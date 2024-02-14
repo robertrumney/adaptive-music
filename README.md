@@ -1,4 +1,4 @@
-# GameMusic
+# Adaptive Music System
 
 The GameMusic script is a Unity component that provides music management functionality for your game. It allows you to control the music playback and transition between different music states, such as danger and calm. You can easily integrate this script into your game by following the steps below.
 
